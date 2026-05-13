@@ -15,24 +15,13 @@ jobs:
         with:
           python-version: '3.11'
 
-      # Устанавливаем Chrome — нужен для Selenium парсера ГИБДД
-      - name: Install Chrome
-        run: |
-          sudo apt-get update -q
-          sudo apt-get install -y chromium-browser chromium-chromedriver
-          chromium-browser --version
-
-      - name: Install Python dependencies
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
-      # Запускаем все источники: seed + ГИБДД (Selenium) + avtoshkoli + 2GIS
-      - name: Run parser
-        run: python main.py --source seed,gibdd,avtoshkoli,2gis --build-site
+      - name: Run parser (seed + avtoshkoli + 2gis)
+        run: python main.py --source seed,avtoshkoli,2gis --build-site
         env:
           TWOGIS_API_KEY: ${{ secrets.TWOGIS_API_KEY }}
-          # Chrome путь для GitHub Actions
-          CHROME_BIN: /usr/bin/chromium-browser
-          CHROMEDRIVER_PATH: /usr/bin/chromedriver
 
       - name: Commit and push updates
         run: |
