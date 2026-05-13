@@ -18,10 +18,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run parser (2GIS + seed)
-        run: python main.py --source 2gis,seed --build-site
-        env:
-          TWOGIS_API_KEY: ${{ secrets.TWOGIS_API_KEY }}
+      - name: Run parser (все источники)
+        run: python main.py --source seed,gibdd,avtoshkoli,2gis --build-site
 
       - name: Commit and push updates
         run: |
