@@ -1,0 +1,35 @@
+﻿name,city,address,phone,categories,price,rating,reviews,source,source_url
+ЦППК ФАУ,Абакан,"ул. Маршала Жукова, 99",+7 (3902) 27-90-47,"C, CE",40 000 руб.,,,seed,https://avtoshkoli.ru/abakan/obuchenie-na-kategoriyu-c/
+iDriver,Балашиха,Балашиха / Железнодорожный,,C,50 000 руб.,,,seed,https://idriver.ru/
+Пятое колесо,Вологда,Вологда,,C,30 000 руб.,,,seed,https://avtoshkoli.ru/vologda/obuchenie-na-kategoriyu-c/
+Прайм-Авто,Екатеринбург,5 филиалов,,"C, C1",39 000 руб.,,,seed,https://primeavto.ru/
+Профессионал,Екатеринбург,"ул. Сибирский тракт 8Д, офис 210",+7 (902) 446-17-35,CE,,,,seed,https://profi196.ru/
+АвтоДока,Калининград,Калининград,,CE,,,,seed,https://avtodoka39.com/
+ДОСААФ Калуга,Калуга,Калуга,,C,47 000 руб.,,,seed,https://avtoshkoli.ru/kaluga/obuchenie-na-kategoriyu-c/
+АВМ,Красноярск,"ул. Академика Павлова, 49А",+7 (391) 989-79-19,C,27 000 руб.,,,seed,https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/
+Автошкола СФУ,Красноярск,"ул. Борисова, 24",+7 (391) 249-77-35,C,52 000 руб.,5/5,1,seed,https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/
+Автошкола Старт,Красноярск,"ул. Ладо Кецховели, 57",+7 (391) 252-02-21,C,30 000 руб.,4/5,3,seed,https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/
+Magic Drive,Москва,Москва,,"C, C1",от 14 000 руб.,,,seed,https://magic-drive.ru/
+Аргос,Москва,"ул. Красноярская, д. 3 к.1",,"C, CE",,,,seed,https://argoc.ru/
+ДОСААФ (Алгоритм),Москва,"Измайловский проезд, 11, стр. 2",,"C, CE",,,,seed,https://www.umc-algoritm.ru/
+Мегаполис,Москва,Москва,,"C, CE",,,,seed,https://megapolis-car.ru/
+Светофор,Москва,Москва,,CE,,,,seed,https://svetofor.ru/
+Фортуна-Авто,Москва,Москва,,C,,,,seed,https://frt-avto.ru/
+Центральная автошкола Москвы,Москва,Москва (58 учебных классов),+7 (495) 122-00-15,"C, C1, CE",,,,seed,https://www.autoprava.ru/
+Абсолют-НН,Нижний Новгород,Нижний Новгород,,C,23 000 руб.,,,seed,https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/
+Авто-Профи НН,Нижний Новгород,"ул. Ефремова, 6",+7 (831) 212-82-72,C,34 500 руб.,,,seed,https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/
+Виста-НН,Нижний Новгород,"ул. Чаадаева, 3Б",+7 (831) 415-32-04,C,от 25 000 руб.,,,seed,https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/
+Орлан,Ногинск,Ногинск,,C,69 000 руб.,,,seed,https://avtoshkoli.ru/noginsk/obuchenie-na-kategoriyu-c/
+Вираж-58,Пенза,"ул. Луначарского, 51",+7 (8412) 53-61-11,C,10 000 руб.,5/5,2,seed,https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/
+ДОСААФ Пенза,Пенза,"ул. Восточная, 7",+7 (8412) 55-19-23,C,10 300 руб.,5/5,1,seed,https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/
+ТВИСПО,Пенза,"ул. Суворова, 120",+7 (8412) 99-99-79,C,45 000 руб.,4/5,166,seed,https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/
+Авто Профи Пермь,Пермь,Пермь,,C,от 14 000 руб.,,,seed,https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/
+Вектор Пермь,Пермь,Пермь,,C,от 5 000 руб.,,,seed,https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/
+Неокруг,Пермь,Пермь,,C,14 000 руб.,,,seed,https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/
+Авторалли,Санкт-Петербург,13 филиалов у метро,,"C, C1, CE",,,,seed,https://autorally-spb.ru/
+Мегаполис СПб,Санкт-Петербург,56 филиалов,,"C, CE",от 21 800 руб.,,,seed,https://megapolis-car.ru/spb/
+Автостатус,Тюмень,"ул. Республики, 169к1",+7 (985) 219-62-74,C,21 900 руб.,5/5,7,seed,https://avtoshkoli.ru/tyumen/obuchenie-na-kategoriyu-c/
+Тюменская автошкола ВОА,Тюмень,"ул. Пермякова, 44",+7 (3452) 33-36-26,C,50 000 руб.,,,seed,https://avtoshkoli.ru/tyumen/obuchenie-na-kategoriyu-c/
+Автошкола Уфа (категория C),Уфа,"Менделеева, 137; Гафури, 54",,C,от 9 900 руб.,,,seed,https://xn----7sbahra5aeae5abgkqcrfn1i6i.xn--p1ai/
+БашАвтоЛига,Уфа,"пр. Октября, 55",+7 (347) 225-05-81,"C, CE",11 500 руб.,5/5,129,seed,https://avtoshkoli.ru/ufa/obuchenie-na-kategoriyu-c/
+ДОСААФ Уфа,Уфа,"ул. Трамвайная, 17А",,C,11 900 руб.,,,seed,https://avtoshkoli.ru/ufa/obuchenie-na-kategoriyu-c/
