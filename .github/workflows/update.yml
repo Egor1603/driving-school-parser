@@ -18,8 +18,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run parser (все источники)
-        run: python main.py --source seed,gibdd,avtoshkoli,2gis --build-site
+      - name: Run parser (seed + avtoshkoli + 2gis)
+        run: python main.py --source seed,avtoshkoli,2gis --build-site
 
       - name: Commit and push updates
         run: |
