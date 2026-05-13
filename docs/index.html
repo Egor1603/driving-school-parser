@@ -1,1 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Автошколы РФ — категория C и выше</title>
+<meta name="description" content="Справочник автошкол России — категории C, C1, CE, C1E. Поиск, фильтры, скачать список.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- SheetJS для генерации Excel прямо в браузере -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0e0f0e; --bg2:#161714; --bg3:#1e1f1c; --bg4:#272824;
+  --border:rgba(255,255,255,0.08); --border2:rgba(255,255,255,0.14);
+  --text:#e8e6df; --muted:#8a887f;
+  --accent:#f4a01c; --accent2:#e07c00;
+  --green:#4caf6e; --red:#e85d5d;
+  --cat-c:#f4a01c; --cat-c1:#f4c86a; --cat-ce:#ff6b35; --cat-c1e:#ff9068;
+}
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:15px; line-height:1.6; min-height:100vh; }
 
+/* HEADER */
+header { position:sticky; top:0; z-index:100; background:var(--bg); border-bottom:1px solid var(--border); padding:0 2rem; display:flex; align-items:center; gap:1.5rem; height:56px; }
+.logo { font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.08em; color:var(--accent); white-space:nowrap; flex-shrink:0; }
+.logo span { color:var(--text); }
+.search-wrap { flex:1; max-width:380px; position:relative; }
+.search-wrap svg { position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+#search { width:100%; background:var(--bg3); border:1px solid var(--border2); border-radius:8px; padding:8px 12px 8px 38px; color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:14px; outline:none; transition:border-color 0.15s; }
+#search:focus { border-color:var(--accent); }
+#search::placeholder { color:var(--muted); }
+.header-right { margin-left:auto; display:flex; align-items:center; gap:1rem; }
+.stats-header { font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); white-space:nowrap; }
+.stats-header strong { color:var(--accent); font-weight:500; }
+
+/* EXCEL BUTTON */
+.btn-excel {
+  display:inline-flex; align-items:center; gap:7px;
+  background:rgba(76,175,110,0.15); color:var(--green);
+  border:1px solid rgba(76,175,110,0.35); border-radius:7px;
+  padding:6px 14px; font-size:13px; font-weight:500;
+  cursor:pointer; white-space:nowrap;
+  transition:background 0.15s, border-color 0.15s;
+  font-family:'IBM Plex Sans',sans-serif;
+}
+.btn-excel:hover { background:rgba(76,175,110,0.25); border-color:rgba(76,175,110,0.6); }
+.btn-excel svg { flex-shrink:0; }
+.btn-excel.loading { opacity:0.6; cursor:wait; }
+
+/* ROAD STRIPE */
+.road-stripe { height:4px; background:repeating-linear-gradient(90deg,var(--accent) 0,var(--accent) 30px,transparent 30px,transparent 50px); }
+
+/* HERO */
+.hero { background:var(--bg2); border-bottom:1px solid var(--border); padding:2rem 2rem 1.5rem; }
+.hero h1 { font-family:'Bebas Neue',sans-serif; font-size:clamp(32px,5vw,52px); letter-spacing:0.04em; line-height:1; }
+.hero h1 em { color:var(--accent); font-style:normal; }
+.hero p { margin-top:0.5rem; font-size:14px; color:var(--muted); max-width:520px; }
+.cat-legend { display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.25rem; }
+.cat-badge { font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; letter-spacing:0.06em; padding:3px 10px; border-radius:4px; cursor:pointer; border:1.5px solid transparent; transition:opacity 0.15s,border-color 0.15s; user-select:none; }
+.cat-badge.active { border-color:currentColor; }
+.cat-badge[data-cat="ALL"] { background:rgba(255,255,255,0.07); color:var(--text); }
+.cat-badge[data-cat="C"]   { background:rgba(244,160,28,0.15); color:var(--cat-c); }
+.cat-badge[data-cat="C1"]  { background:rgba(244,200,106,0.12); color:var(--cat-c1); }
+.cat-badge[data-cat="CE"]  { background:rgba(255,107,53,0.15); color:var(--cat-ce); }
+.cat-badge[data-cat="C1E"] { background:rgba(255,144,104,0.15); color:var(--cat-c1e); }
+
+/* CONTROLS */
+.controls { padding:0.875rem 2rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; border-bottom:1px solid var(--border); background:var(--bg); position:sticky; top:56px; z-index:90; }
+.control-label { font-size:12px; color:var(--muted); white-space:nowrap; }
+select { background:var(--bg3); border:1px solid var(--border2); border-radius:6px; color:var(--text); font-family:'IBM Plex Sans',sans-serif; font-size:13px; padding:6px 28px 6px 10px; cursor:pointer; outline:none; appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%238a887f' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; transition:border-color 0.15s; }
+select:focus { border-color:var(--accent); }
+.count-badge { margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted); }
+.count-badge strong { color:var(--text); }
+
+/* LAYOUT */
+.layout { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 220px); }
+.sidebar { border-right:1px solid var(--border); padding:1.25rem 0; position:sticky; top:105px; height:calc(100vh - 105px); overflow-y:auto; background:var(--bg); }
+.sidebar::-webkit-scrollbar { width:4px; }
+.sidebar::-webkit-scrollbar-thumb { background:var(--border2); border-radius:2px; }
+.sidebar-title { font-size:10px; letter-spacing:0.12em; color:var(--muted); text-transform:uppercase; padding:0 1.25rem 0.75rem; }
+.city-link { display:flex; align-items:center; justify-content:space-between; padding:5px 1.25rem; cursor:pointer; font-size:13px; color:var(--muted); transition:background 0.1s,color 0.1s; border-left:2px solid transparent; }
+.city-link:hover { background:var(--bg3); color:var(--text); }
+.city-link.active { color:var(--accent); border-left-color:var(--accent); background:rgba(244,160,28,0.06); }
+.city-count { font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--muted); }
+
+/* CARDS */
+.cards-area { padding:1.5rem 2rem; }
+.city-section { margin-bottom:2.5rem; }
+.city-heading { font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.06em; color:var(--text); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:0.75rem; }
+.city-count-inline { font-family:'IBM Plex Mono',monospace; font-size:12px; font-weight:400; color:var(--muted); letter-spacing:0; }
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:12px; }
+.card { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:1rem 1.25rem; display:flex; flex-direction:column; gap:0.75rem; transition:border-color 0.15s,transform 0.1s; animation:fadeIn 0.2s ease both; }
+.card:hover { border-color:var(--border2); transform:translateY(-1px); }
+@keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+.card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; }
+.card-name { font-size:15px; font-weight:600; color:var(--text); line-height:1.3; }
+.card-cats { display:flex; gap:4px; flex-wrap:wrap; flex-shrink:0; }
+.pill { font-family:'IBM Plex Mono',monospace; font-size:10px; font-weight:500; letter-spacing:0.04em; padding:2px 7px; border-radius:3px; }
+.pill-C   { background:rgba(244,160,28,0.18); color:var(--cat-c); }
+.pill-C1  { background:rgba(244,200,106,0.15); color:var(--cat-c1); }
+.pill-CE  { background:rgba(255,107,53,0.18); color:var(--cat-ce); }
+.pill-C1E { background:rgba(255,144,104,0.18); color:var(--cat-c1e); }
+.card-body { display:flex; flex-direction:column; gap:5px; font-size:13px; }
+.card-row { display:flex; align-items:flex-start; gap:8px; color:var(--muted); }
+.card-row svg { flex-shrink:0; margin-top:2px; }
+.card-row span { color:var(--text); }
+.card-row .legal { font-size:12px; color:var(--muted); font-style:italic; }
+.card-row a { color:var(--accent); text-decoration:none; word-break:break-all; }
+.card-row a:hover { text-decoration:underline; }
+.card-footer { margin-top:auto; padding-top:0.75rem; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:0.5rem; }
+.price-tag { font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--green); font-weight:500; }
+.site-link { display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--accent); text-decoration:none; padding:4px 10px; border:1px solid rgba(244,160,28,0.3); border-radius:5px; transition:background 0.12s; }
+.site-link:hover { background:rgba(244,160,28,0.1); }
+.source-link { display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--muted); text-decoration:none; padding:4px 10px; border:1px solid var(--border); border-radius:5px; transition:background 0.12s; }
+.source-link:hover { background:var(--bg3); color:var(--text); }
+.source-badge { font-family:'IBM Plex Mono',monospace; font-size:10px; padding:2px 6px; border-radius:3px; margin-left:4px; vertical-align:middle; }
+.source-yandex { background:rgba(255,204,0,0.12); color:#ffcc00; }
+.source-2gis   { background:rgba(41,182,246,0.12); color:#29b6f6; }
+.source-seed   { background:rgba(138,136,127,0.15); color:var(--muted); }
+.source-gibdd  { background:rgba(76,175,110,0.15); color:var(--green); }
+.empty { padding:4rem 2rem; text-align:center; color:var(--muted); display:none; }
+.empty.show { display:block; }
+.empty-icon { font-size:40px; margin-bottom:1rem; }
+.empty h3 { font-size:18px; color:var(--text); margin-bottom:0.5rem; }
+
+/* TOAST */
+.toast { position:fixed; bottom:2rem; right:2rem; background:var(--bg3); border:1px solid var(--green); color:var(--green); padding:12px 20px; border-radius:8px; font-size:14px; display:flex; align-items:center; gap:8px; z-index:999; transform:translateY(100px); opacity:0; transition:all 0.3s ease; pointer-events:none; }
+.toast.show { transform:translateY(0); opacity:1; }
+
+footer { border-top:1px solid var(--border); padding:1.5rem 2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:12px; color:var(--muted); }
+footer a { color:var(--muted); text-decoration:none; }
+footer a:hover { color:var(--text); }
+
+@media (max-width:768px) {
+  .layout { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  header { padding:0 1rem; gap:0.75rem; }
+  .hero,.controls,.cards-area { padding-left:1rem; padding-right:1rem; }
+  .btn-excel span { display:none; }
+}
+</style>
+</head>
+<body>
+<div class="road-stripe"></div>
+
+<header>
+  <div class="logo">Автошколы <span>РФ</span></div>
+  <div class="search-wrap">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="Поиск по названию, городу, адресу…">
+  </div>
+  <div class="header-right">
+    <div class="stats-header">Школ: <strong id="total-count">—</strong></div>
+    <button class="btn-excel" id="btn-excel" onclick="exportExcel()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      <span>Скачать Excel</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Грузовые<br>категории <em>C и выше</em></h1>
+  <p>Актуальный справочник автошкол России. Данные собраны из Яндекс Бизнеса, 2GIS, реестра ГИБДД и открытых агрегаторов.</p>
+  <div class="cat-legend">
+    <div class="cat-badge active" data-cat="ALL">Все категории</div>
+    <div class="cat-badge" data-cat="C">C — грузовые &gt;3.5т</div>
+    <div class="cat-badge" data-cat="C1">C1 — до 7.5т</div>
+    <div class="cat-badge" data-cat="CE">CE — с прицепом</div>
+    <div class="cat-badge" data-cat="C1E">C1E — малые с прицепом</div>
+  </div>
+</section>
+
+<div class="controls">
+  <span class="control-label">Город:</span>
+  <select id="city-filter"><option value="">Все города</option></select>
+  <span class="control-label">Источник:</span>
+  <select id="source-filter">
+    <option value="">Все источники</option>
+    <option value="yandex">Яндекс</option>
+    <option value="2gis">2GIS</option>
+    <option value="gibdd">ГИБДД</option>
+    <option value="seed">База</option>
+  </select>
+  <span class="control-label">Сортировка:</span>
+  <select id="sort-select">
+    <option value="name">По названию</option>
+    <option value="city">По городу</option>
+    <option value="price">По цене ↑</option>
+  </select>
+  <div class="count-badge">Показано: <strong id="shown-count">—</strong></div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-title">Города</div>
+    <div id="city-nav"></div>
+  </aside>
+  <main class="cards-area" id="cards-area">
+    <div class="empty" id="empty-state">
+      <div class="empty-icon">🚛</div>
+      <h3>Ничего не найдено</h3>
+      <p>Попробуйте изменить поисковый запрос или фильтры</p>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toast-msg">Файл скачан!</span>
+</div>
+
+<footer>
+  <span>Данные: Яндекс Бизнес, 2GIS, реестр ГИБДД, avtoshkoli.ru</span>
+  <a href="https://github.com/YOUR_USERNAME/driving-school-parser" target="_blank">GitHub →</a>
+</footer>
+
+<script>
+const DATA = [
+  {
+    "name": "ЦППК ФАУ",
+    "city": "Абакан",
+    "address": "ул. Маршала Жукова, 99",
+    "phone": "+7 (3902) 27-90-47",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "40 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/abakan/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "iDriver",
+    "city": "Балашиха",
+    "address": "Балашиха / Железнодорожный",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "50 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://idriver.ru/",
+    "source": "seed",
+    "website": "https://idriver.ru/"
+  },
+  {
+    "name": "Пятое колесо",
+    "city": "Вологда",
+    "address": "Вологда",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "30 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/vologda/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Прайм-Авто",
+    "city": "Екатеринбург",
+    "address": "5 филиалов",
+    "phone": "",
+    "categories": [
+      "C",
+      "C1"
+    ],
+    "legal_name": "",
+    "price": "39 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://primeavto.ru/",
+    "source": "seed",
+    "website": "https://primeavto.ru/"
+  },
+  {
+    "name": "Профессионал",
+    "city": "Екатеринбург",
+    "address": "ул. Сибирский тракт 8Д, офис 210",
+    "phone": "+7 (902) 446-17-35",
+    "categories": [
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://profi196.ru/",
+    "source": "seed",
+    "website": "https://profi196.ru/"
+  },
+  {
+    "name": "АвтоДока",
+    "city": "Калининград",
+    "address": "Калининград",
+    "phone": "",
+    "categories": [
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtodoka39.com/",
+    "source": "seed",
+    "website": "https://avtodoka39.com/"
+  },
+  {
+    "name": "ДОСААФ Калуга",
+    "city": "Калуга",
+    "address": "Калуга",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "47 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/kaluga/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "АВМ",
+    "city": "Красноярск",
+    "address": "ул. Академика Павлова, 49А",
+    "phone": "+7 (391) 989-79-19",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "27 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Автошкола СФУ",
+    "city": "Красноярск",
+    "address": "ул. Борисова, 24",
+    "phone": "+7 (391) 249-77-35",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "52 000 руб.",
+    "rating": "5/5",
+    "reviews": "1",
+    "source_url": "https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Автошкола Старт",
+    "city": "Красноярск",
+    "address": "ул. Ладо Кецховели, 57",
+    "phone": "+7 (391) 252-02-21",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "30 000 руб.",
+    "rating": "4/5",
+    "reviews": "3",
+    "source_url": "https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Magic Drive",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "C",
+      "C1"
+    ],
+    "legal_name": "",
+    "price": "от 14 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://magic-drive.ru/",
+    "source": "seed",
+    "website": "https://magic-drive.ru/"
+  },
+  {
+    "name": "Аргос",
+    "city": "Москва",
+    "address": "ул. Красноярская, д. 3 к.1",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://argoc.ru/",
+    "source": "seed",
+    "website": "https://argoc.ru/"
+  },
+  {
+    "name": "ДОСААФ (Алгоритм)",
+    "city": "Москва",
+    "address": "Измайловский проезд, 11, стр. 2",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://www.umc-algoritm.ru/",
+    "source": "seed",
+    "website": "https://www.umc-algoritm.ru/"
+  },
+  {
+    "name": "Мегаполис",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://megapolis-car.ru/",
+    "source": "seed",
+    "website": "https://megapolis-car.ru/"
+  },
+  {
+    "name": "Светофор",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://svetofor.ru/",
+    "source": "seed",
+    "website": "https://svetofor.ru/"
+  },
+  {
+    "name": "Фортуна-Авто",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://frt-avto.ru/",
+    "source": "seed",
+    "website": "https://frt-avto.ru/"
+  },
+  {
+    "name": "Центральная автошкола Москвы",
+    "city": "Москва",
+    "address": "Москва (58 учебных классов)",
+    "phone": "+7 (495) 122-00-15",
+    "categories": [
+      "C",
+      "C1",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://www.autoprava.ru/",
+    "source": "seed",
+    "website": "https://www.autoprava.ru/"
+  },
+  {
+    "name": "Абсолют-НН",
+    "city": "Нижний Новгород",
+    "address": "Нижний Новгород",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "23 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Авто-Профи НН",
+    "city": "Нижний Новгород",
+    "address": "ул. Ефремова, 6",
+    "phone": "+7 (831) 212-82-72",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "34 500 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Виста-НН",
+    "city": "Нижний Новгород",
+    "address": "ул. Чаадаева, 3Б",
+    "phone": "+7 (831) 415-32-04",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 25 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Орлан",
+    "city": "Ногинск",
+    "address": "Ногинск",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "69 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/noginsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Вираж-58",
+    "city": "Пенза",
+    "address": "ул. Луначарского, 51",
+    "phone": "+7 (8412) 53-61-11",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "10 000 руб.",
+    "rating": "5/5",
+    "reviews": "2",
+    "source_url": "https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "ДОСААФ Пенза",
+    "city": "Пенза",
+    "address": "ул. Восточная, 7",
+    "phone": "+7 (8412) 55-19-23",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "10 300 руб.",
+    "rating": "5/5",
+    "reviews": "1",
+    "source_url": "https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "ТВИСПО",
+    "city": "Пенза",
+    "address": "ул. Суворова, 120",
+    "phone": "+7 (8412) 99-99-79",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "45 000 руб.",
+    "rating": "4/5",
+    "reviews": "166",
+    "source_url": "https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Авто Профи Пермь",
+    "city": "Пермь",
+    "address": "Пермь",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 14 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Вектор Пермь",
+    "city": "Пермь",
+    "address": "Пермь",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 5 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Неокруг",
+    "city": "Пермь",
+    "address": "Пермь",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "14 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Авторалли",
+    "city": "Санкт-Петербург",
+    "address": "13 филиалов у метро",
+    "phone": "",
+    "categories": [
+      "C",
+      "C1",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://autorally-spb.ru/",
+    "source": "seed",
+    "website": "https://autorally-spb.ru/"
+  },
+  {
+    "name": "Мегаполис СПб",
+    "city": "Санкт-Петербург",
+    "address": "56 филиалов",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "от 21 800 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://megapolis-car.ru/spb/",
+    "source": "seed",
+    "website": "https://megapolis-car.ru/spb/"
+  },
+  {
+    "name": "Автостатус",
+    "city": "Тюмень",
+    "address": "ул. Республики, 169к1",
+    "phone": "+7 (985) 219-62-74",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "21 900 руб.",
+    "rating": "5/5",
+    "reviews": "7",
+    "source_url": "https://avtoshkoli.ru/tyumen/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Тюменская автошкола ВОА",
+    "city": "Тюмень",
+    "address": "ул. Пермякова, 44",
+    "phone": "+7 (3452) 33-36-26",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "50 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/tyumen/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "Автошкола Уфа (категория C)",
+    "city": "Уфа",
+    "address": "Менделеева, 137; Гафури, 54",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 9 900 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://xn----7sbahra5aeae5abgkqcrfn1i6i.xn--p1ai/",
+    "source": "seed",
+    "website": "https://xn----7sbahra5aeae5abgkqcrfn1i6i.xn--p1ai/"
+  },
+  {
+    "name": "БашАвтоЛига",
+    "city": "Уфа",
+    "address": "пр. Октября, 55",
+    "phone": "+7 (347) 225-05-81",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "11 500 руб.",
+    "rating": "5/5",
+    "reviews": "129",
+    "source_url": "https://avtoshkoli.ru/ufa/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  },
+  {
+    "name": "ДОСААФ Уфа",
+    "city": "Уфа",
+    "address": "ул. Трамвайная, 17А",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "11 900 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/ufa/obuchenie-na-kategoriyu-c/",
+    "source": "seed",
+    "website": ""
+  }
+];
+
+let activeCat='ALL', activeCity='', activeSource='', searchQuery='', sortBy='name';
+
+const ICONS = {
+  pin:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+  tel:  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.07 3.4 2 2 0 0 1 3.05 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>',
+  legal:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>',
+  ext:  '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+};
+
+function parsePrice(p) {
+  if (!p) return Infinity;
+  const m = p.replace(/\s/g,'').match(/\d+/);
+  return m ? parseInt(m[0]) : Infinity;
+}
+
+function getFiltered() {
+  let list = DATA.slice();
+  if (activeCat !== 'ALL') list = list.filter(s => s.categories.includes(activeCat));
+  if (activeCity)   list = list.filter(s => s.city === activeCity);
+  if (activeSource) list = list.filter(s => s.source === activeSource);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(s =>
+      s.name.toLowerCase().includes(q) ||
+      s.city.toLowerCase().includes(q) ||
+      (s.address||'').toLowerCase().includes(q) ||
+      (s.phone||'').includes(q) ||
+      (s.legal_name||'').toLowerCase().includes(q)
+    );
+  }
+  list.sort((a,b) => {
+    if (sortBy==='city')  return a.city.localeCompare(b.city,'ru')||a.name.localeCompare(b.name,'ru');
+    if (sortBy==='price') return parsePrice(a.price)-parsePrice(b.price);
+    return a.name.localeCompare(b.name,'ru');
+  });
+  return list;
+}
+
+function groupByCity(list) {
+  const map={};
+  list.forEach(s=>{ (map[s.city]=map[s.city]||[]).push(s); });
+  return map;
+}
+
+function plural(n) {
+  if(n%10===1&&n%100!==11) return 'школа';
+  if([2,3,4].includes(n%10)&&![12,13,14].includes(n%100)) return 'школы';
+  return 'школ';
+}
+
+function sourceBadge(src) {
+  if(!src) return '';
+  const map={yandex:'Яндекс','2gis':'2GIS',gibdd:'ГИБДД',seed:'База',avtoshkoli:'Сайт'};
+  const label=map[src]||src;
+  return `<span class="source-badge source-${src}">${label}</span>`;
+}
+
+function renderCard(s) {
+  const cats = s.categories.map(c=>`<span class="pill pill-${c.replace(/[^A-Z0-9]/g,'')}">${c}</span>`).join('');
+  const addr  = s.address   ? `<div class="card-row">${ICONS.pin}<span>${s.address}</span></div>` : '';
+  const tel   = s.phone     ? `<div class="card-row">${ICONS.tel}<a href="tel:${s.phone}">${s.phone}</a></div>` : '';
+  const legal = s.legal_name? `<div class="card-row">${ICONS.legal}<span class="legal">${s.legal_name}</span></div>` : '';
+
+  const priceBlock = s.price ? `<span class="price-tag">${s.price}</span>` : '<span></span>';
+  let linkBtn = '';
+  if (s.website) {
+    let domain = s.website.replace(/https?:\/\/(www\.)?/,'').split('/')[0];
+    linkBtn = `<a href="${s.website}" target="_blank" rel="noopener" class="site-link">${ICONS.ext} ${domain}</a>`;
+  } else if (s.source_url) {
+    const label = s.source==='yandex'?'Яндекс':s.source==='2gis'?'2GIS':'Источник';
+    linkBtn = `<a href="${s.source_url}" target="_blank" rel="noopener" class="source-link">${ICONS.ext} ${label}</a>`;
+  }
+
+  return `<div class="card">
+    <div class="card-top">
+      <div class="card-name">${s.name}${sourceBadge(s.source)}</div>
+      <div class="card-cats">${cats}</div>
+    </div>
+    <div class="card-body">${addr}${tel}${legal}</div>
+    <div class="card-footer">${priceBlock}${linkBtn}</div>
+  </div>`;
+}
+
+function render() {
+  const filtered=getFiltered();
+  const grouped=groupByCity(filtered);
+  const area=document.getElementById('cards-area');
+  const empty=document.getElementById('empty-state');
+  document.getElementById('shown-count').textContent=filtered.length;
+
+  if (!filtered.length) {
+    area.innerHTML=''; area.appendChild(empty); empty.classList.add('show'); return;
+  }
+  empty.classList.remove('show');
+
+  const cities=Object.keys(grouped).sort((a,b)=>a.localeCompare(b,'ru'));
+  area.innerHTML=cities.map(city=>{
+    const n=grouped[city].length;
+    return `<div class="city-section" id="sec-${CSS.escape(city)}">
+      <div class="city-heading">${city} <span class="city-count-inline">${n} ${plural(n)}</span></div>
+      <div class="cards-grid">${grouped[city].map(renderCard).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+/* ===== EXCEL EXPORT ===== */
+function exportExcel() {
+  const btn = document.getElementById('btn-excel');
+  btn.classList.add('loading');
+
+  const filtered = getFiltered();
+
+  // Формируем строки для Excel
+  const rows = filtered.map(s => ({
+    'Название автошколы':   s.name || '',
+    'Юр. лицо (ООО/ИП)':   s.legal_name || '',
+    'Город':                s.city || '',
+    'Ссылка':               s.website || s.source_url || '',
+    'Телефон':              s.phone || '',
+    'Категории прав':       (s.categories||[]).join(', '),
+    'Адрес':                s.address || '',
+    'Цена':                 s.price || '',
+    'Источник':             s.source || '',
+  }));
+
+  const ws = XLSX.utils.json_to_sheet(rows);
+
+  // Ширина столбцов
+  ws['!cols'] = [
+    {wch:35}, // Название
+    {wch:30}, // Юр. лицо
+    {wch:18}, // Город
+    {wch:40}, // Ссылка
+    {wch:20}, // Телефон
+    {wch:18}, // Категории
+    {wch:35}, // Адрес
+    {wch:15}, // Цена
+    {wch:12}, // Источник
+  ];
+
+  // Стиль заголовков
+  const headerStyle = {
+    font:  { bold:true, color:{ rgb:"FFFFFF" } },
+    fill:  { fgColor:{ rgb:"1A1A1A" } },
+    alignment: { horizontal:"center" }
+  };
+  const headerCells = ['A1','B1','C1','D1','E1','F1','G1','H1','I1'];
+  headerCells.forEach(cell => {
+    if (ws[cell]) ws[cell].s = headerStyle;
+  });
+
+  // Делаем ссылки кликабельными
+  rows.forEach((row, i) => {
+    const url = row['Ссылка'];
+    if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+      const cellAddr = `D${i+2}`;
+      if (ws[cellAddr]) {
+        ws[cellAddr].l = { Target: url, Tooltip: url };
+      }
+    }
+  });
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Автошколы');
+
+  // Имя файла с датой и фильтрами
+  const date = new Date().toISOString().slice(0,10);
+  const cityPart = activeCity ? `_${activeCity}` : '';
+  const catPart  = activeCat !== 'ALL' ? `_кат${activeCat}` : '';
+  const filename = `avtoshkoly_C${catPart}${cityPart}_${date}.xlsx`;
+
+  XLSX.writeFile(wb, filename);
+
+  btn.classList.remove('loading');
+  showToast(`✓ Скачано ${filtered.length} школ → ${filename}`);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+/* ===== SIDEBAR & FILTERS ===== */
+function buildSidebar() {
+  const counts={};
+  DATA.forEach(s=>{ counts[s.city]=(counts[s.city]||0)+1; });
+  const cities=Object.keys(counts).sort((a,b)=>a.localeCompare(b,'ru'));
+  const nav=document.getElementById('city-nav');
+  nav.innerHTML=`<div class="city-link active" data-city="" onclick="filterCity(this,'')">Все города <span class="city-count">${DATA.length}</span></div>`
+    +cities.map(c=>`<div class="city-link" data-city="${c}" onclick="filterCity(this,'${c}')">${c} <span class="city-count">${counts[c]}</span></div>`).join('');
+}
+
+function buildCitySelect() {
+  const counts={};
+  DATA.forEach(s=>{ counts[s.city]=(counts[s.city]||0)+1; });
+  const sel=document.getElementById('city-filter');
+  Object.keys(counts).sort((a,b)=>a.localeCompare(b,'ru')).forEach(c=>{
+    const o=document.createElement('option');
+    o.value=c; o.textContent=`${c} (${counts[c]})`; sel.appendChild(o);
+  });
+}
+
+function filterCity(el,city) {
+  document.querySelectorAll('.city-link').forEach(l=>l.classList.remove('active'));
+  el.classList.add('active');
+  activeCity=city;
+  document.getElementById('city-filter').value=city;
+  render();
+  if(city){ const s=document.getElementById('sec-'+CSS.escape(city)); if(s) s.scrollIntoView({behavior:'smooth',block:'start'}); }
+}
+
+document.querySelectorAll('.cat-badge').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.cat-badge').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active'); activeCat=b.dataset.cat; render();
+}));
+document.getElementById('search').addEventListener('input',e=>{ searchQuery=e.target.value.trim(); render(); });
+document.getElementById('city-filter').addEventListener('change',e=>{
+  activeCity=e.target.value;
+  document.querySelectorAll('.city-link').forEach(l=>l.classList.toggle('active',l.dataset.city===activeCity));
+  render();
+});
+document.getElementById('source-filter').addEventListener('change',e=>{ activeSource=e.target.value; render(); });
+document.getElementById('sort-select').addEventListener('change',e=>{ sortBy=e.target.value; render(); });
+
+document.getElementById('total-count').textContent=DATA.length;
+buildSidebar();
+buildCitySelect();
+render();
+</script>
+</body>
+</html>
