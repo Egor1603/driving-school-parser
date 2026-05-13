@@ -1,1 +1,524 @@
-
+[
+  {
+    "name": "ЦППК ФАУ",
+    "city": "Абакан",
+    "address": "ул. Маршала Жукова, 99",
+    "phone": "+7 (3902) 27-90-47",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "40 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/abakan/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "iDriver",
+    "city": "Балашиха",
+    "address": "Балашиха / Железнодорожный",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "50 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://idriver.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Пятое колесо",
+    "city": "Вологда",
+    "address": "Вологда",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "30 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/vologda/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Прайм-Авто",
+    "city": "Екатеринбург",
+    "address": "5 филиалов",
+    "phone": "",
+    "categories": [
+      "C",
+      "C1"
+    ],
+    "legal_name": "",
+    "price": "39 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://primeavto.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Профессионал",
+    "city": "Екатеринбург",
+    "address": "ул. Сибирский тракт 8Д, офис 210",
+    "phone": "+7 (902) 446-17-35",
+    "categories": [
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://profi196.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "АвтоДока",
+    "city": "Калининград",
+    "address": "Калининград",
+    "phone": "",
+    "categories": [
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtodoka39.com/",
+    "source": "seed"
+  },
+  {
+    "name": "ДОСААФ Калуга",
+    "city": "Калуга",
+    "address": "Калуга",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "47 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/kaluga/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "АВМ",
+    "city": "Красноярск",
+    "address": "ул. Академика Павлова, 49А",
+    "phone": "+7 (391) 989-79-19",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "27 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Автошкола СФУ",
+    "city": "Красноярск",
+    "address": "ул. Борисова, 24",
+    "phone": "+7 (391) 249-77-35",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "52 000 руб.",
+    "rating": "5/5",
+    "reviews": "1",
+    "source_url": "https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Автошкола Старт",
+    "city": "Красноярск",
+    "address": "ул. Ладо Кецховели, 57",
+    "phone": "+7 (391) 252-02-21",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "30 000 руб.",
+    "rating": "4/5",
+    "reviews": "3",
+    "source_url": "https://avtoshkoli.ru/krasnoyarsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Magic Drive",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "C",
+      "C1"
+    ],
+    "legal_name": "",
+    "price": "от 14 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://magic-drive.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Аргос",
+    "city": "Москва",
+    "address": "ул. Красноярская, д. 3 к.1",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://argoc.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "ДОСААФ (Алгоритм)",
+    "city": "Москва",
+    "address": "Измайловский проезд, 11, стр. 2",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://www.umc-algoritm.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Мегаполис",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://megapolis-car.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Светофор",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://svetofor.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Фортуна-Авто",
+    "city": "Москва",
+    "address": "Москва",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://frt-avto.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Центральная автошкола Москвы",
+    "city": "Москва",
+    "address": "Москва (58 учебных классов)",
+    "phone": "+7 (495) 122-00-15",
+    "categories": [
+      "C",
+      "C1",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://www.autoprava.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Абсолют-НН",
+    "city": "Нижний Новгород",
+    "address": "Нижний Новгород",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "23 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Авто-Профи НН",
+    "city": "Нижний Новгород",
+    "address": "ул. Ефремова, 6",
+    "phone": "+7 (831) 212-82-72",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "34 500 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Виста-НН",
+    "city": "Нижний Новгород",
+    "address": "ул. Чаадаева, 3Б",
+    "phone": "+7 (831) 415-32-04",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 25 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/nizhniy-novgorod/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Орлан",
+    "city": "Ногинск",
+    "address": "Ногинск",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "69 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/noginsk/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Вираж-58",
+    "city": "Пенза",
+    "address": "ул. Луначарского, 51",
+    "phone": "+7 (8412) 53-61-11",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "10 000 руб.",
+    "rating": "5/5",
+    "reviews": "2",
+    "source_url": "https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "ДОСААФ Пенза",
+    "city": "Пенза",
+    "address": "ул. Восточная, 7",
+    "phone": "+7 (8412) 55-19-23",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "10 300 руб.",
+    "rating": "5/5",
+    "reviews": "1",
+    "source_url": "https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "ТВИСПО",
+    "city": "Пенза",
+    "address": "ул. Суворова, 120",
+    "phone": "+7 (8412) 99-99-79",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "45 000 руб.",
+    "rating": "4/5",
+    "reviews": "166",
+    "source_url": "https://avtoshkoli.ru/penza/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Авто Профи Пермь",
+    "city": "Пермь",
+    "address": "Пермь",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 14 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Вектор Пермь",
+    "city": "Пермь",
+    "address": "Пермь",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 5 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Неокруг",
+    "city": "Пермь",
+    "address": "Пермь",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "14 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/perm/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Авторалли",
+    "city": "Санкт-Петербург",
+    "address": "13 филиалов у метро",
+    "phone": "",
+    "categories": [
+      "C",
+      "C1",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://autorally-spb.ru/",
+    "source": "seed"
+  },
+  {
+    "name": "Мегаполис СПб",
+    "city": "Санкт-Петербург",
+    "address": "56 филиалов",
+    "phone": "",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "от 21 800 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://megapolis-car.ru/spb/",
+    "source": "seed"
+  },
+  {
+    "name": "Автостатус",
+    "city": "Тюмень",
+    "address": "ул. Республики, 169к1",
+    "phone": "+7 (985) 219-62-74",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "21 900 руб.",
+    "rating": "5/5",
+    "reviews": "7",
+    "source_url": "https://avtoshkoli.ru/tyumen/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Тюменская автошкола ВОА",
+    "city": "Тюмень",
+    "address": "ул. Пермякова, 44",
+    "phone": "+7 (3452) 33-36-26",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "50 000 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/tyumen/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "Автошкола Уфа (категория C)",
+    "city": "Уфа",
+    "address": "Менделеева, 137; Гафури, 54",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "от 9 900 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://xn----7sbahra5aeae5abgkqcrfn1i6i.xn--p1ai/",
+    "source": "seed"
+  },
+  {
+    "name": "БашАвтоЛига",
+    "city": "Уфа",
+    "address": "пр. Октября, 55",
+    "phone": "+7 (347) 225-05-81",
+    "categories": [
+      "C",
+      "CE"
+    ],
+    "legal_name": "",
+    "price": "11 500 руб.",
+    "rating": "5/5",
+    "reviews": "129",
+    "source_url": "https://avtoshkoli.ru/ufa/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  },
+  {
+    "name": "ДОСААФ Уфа",
+    "city": "Уфа",
+    "address": "ул. Трамвайная, 17А",
+    "phone": "",
+    "categories": [
+      "C"
+    ],
+    "legal_name": "",
+    "price": "11 900 руб.",
+    "rating": "",
+    "reviews": "",
+    "source_url": "https://avtoshkoli.ru/ufa/obuchenie-na-kategoriyu-c/",
+    "source": "seed"
+  }
+]
